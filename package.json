@@ -1,6 +1,6 @@
 {
   "name": "ts-objectify-type",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "TypeScript transformer for creating object representation of deeply nested types",
   "author": "Damian Boryga",
   "license": "MIT",
@@ -18,6 +18,9 @@
   },
   "peerDependencies": {
     "typescript": ">=2.4.1"
+  },
+  "scripts": {
+    "build": "tsc"
   },
   "main": "index.js",
   "keywords": [
@@ -39,6 +42,6 @@
     "index.js",
     "index.d.ts",
     "transformer.ts",
-    "tsconfig.json"
+    "transformer.js"
   ]
 }

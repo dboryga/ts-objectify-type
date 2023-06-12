@@ -3,8 +3,7 @@
     "lib":  ["ESNext"],
     "target": "ESNext",
     "module": "commonjs",
-    "strict": true,
-    "types": ["index.d.ts"]
+    "strict": true
   },
   "include": [
     "transformer.ts",
