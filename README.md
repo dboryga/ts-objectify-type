@@ -97,7 +97,7 @@ yarn add ttypescript -D
 ```
 2. In `tsconfig.json` set a path to the transformer in `compilerOptions` section `plugin` array:
 
-```json
+```json5
 // tsconfig.json
 {
   "compilerOptions": {
