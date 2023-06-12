@@ -9,6 +9,7 @@ TypeScript transformer for creating object representation of deeply nested types
 - - [Types](#types)
 - [Installation](#installation)
 - [Usage](#usage)
+- - [ts-patch](#ttypescript)
 - - [ttypescript](#ttypescript)
 - - [Alternatives](#alternatives)
 - [Examples](#examples)
@@ -81,18 +82,20 @@ easy-to-use options for this purpose. However, there are alternative solutions a
 
 ### [ttypescript](https://github.com/cevek/ttypescript)
 
-The easiest solution is to use a community-driven library called [ttypescript](https://github.com/cevek/ttypescript), 
-which offers a way to overcome this limitation and utilize custom transformers with TypeScript projects.
+TTypescript (Transformer TypeScript) solves the problem by patching on the fly the compile module to use transformers from `tsconfig.json`.
+Instead of `tsc` and `tsserver`, use `ttsc` and `ttsserver` wrappers. 
+These wrappers try to use locally installed typescript first.
+`ttypescript` is also compatible with Webpack and Rollup (check [ttypescript repo](https://github.com/cevek/ttypescript) for more info)
 
 1. Install `ttypescript` as a dev-dependency with npm:
 
-```
+```cmd
 npm install ttypescript --save-dev
 ```
 
 or yarn:
 
-```
+```cmd
 yarn add ttypescript -D
 
 ```
@@ -103,10 +106,16 @@ yarn add ttypescript -D
 {
   "compilerOptions": {
     "plugins": [
-      { "transform": "ts-objectify-type/transformer" }
+      { "transform": "ts-objectify-type/transformer.ts" }
     ]
   }
 }
+```
+
+3. To build project use `ttsc` instead of `tsc`. All arguments work the same way
+
+```cmd
+ttsc
 ```
 
 
