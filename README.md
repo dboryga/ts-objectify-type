@@ -117,7 +117,7 @@ yarn add ts-patch -D
 {
   "compilerOptions": {
     "plugins": [
-      { "transform": "ts-objectify-type/transformer.ts" }
+      { "transform": "ts-objectify-type/transformer" }
     ]
   }
 }
@@ -151,7 +151,7 @@ yarn add ttypescript -D
 {
   "compilerOptions": {
     "plugins": [
-      { "transform": "ts-objectify-type/transformer.ts" }
+      { "transform": "ts-objectify-type/transformer" }
     ]
   }
 }
