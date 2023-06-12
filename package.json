@@ -1,6 +1,6 @@
 {
   "name": "ts-objectify-type",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TypeScript transformer for creating object representation of deeply nested types",
   "author": "Damian Boryga",
   "license": "MIT",
@@ -34,5 +34,10 @@
     "nested",
     "representation",
     "schema"
+  ],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "transformer.ts"
   ]
 }
