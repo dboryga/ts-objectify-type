@@ -25,7 +25,7 @@ const transformerProgram = (
             processedTypes.add(type)
 
             return ts.factory.createRegularExpressionLiteral(
-              JSON.stringify(createNestedObject(props), undefined, '\t')
+              JSON.stringify(createNestedObject(props))
             );
           }
 
