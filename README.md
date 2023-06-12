@@ -30,8 +30,8 @@ TypeScript transformer for creating object representation of deeply nested types
 
 ## Key Feature
 
-The library provides custom typescript transformer that creates object representation of provided Type.  
-To transform type use `objectifyType` from `ts-objectify-type` module:
+The library provides a custom typescript transformer that creates object representation of provided Type.  
+To transform a type use `objectifyType` from the `ts-objectify-type` module:
 
 ```ts
 import { objectifyType } from 'ts-objectify-type';
@@ -43,12 +43,13 @@ interface ExampleType {
 const obj = objectifyType<ExampleType>();
 ```
 
-Returned object is of type `objectified.TypeRepresentation`, which alias for `objectified.Property[]`.
+Returned object is of type `objectified.TypeRepresentation`, which is alias for `objectified.Property[]`.
 
 
 ### Types
-`objectified` namespace provides all types for object returned by `objectifyType` function, and can be also imported from `ts-objectify-type`.
-Check examples for more information.
+
+`objectified` namespace provides all types for the object returned by the `objectifyType` function, and can be also imported from the `ts-objectify-type`.
+Check [examples](#examples) for more information.
 
 
 
@@ -80,22 +81,22 @@ easy-to-use options for this purpose. However, there are alternative solutions a
 
 ### [ttypescript](https://github.com/cevek/ttypescript)
 
-Easiest solution is to use community-driven library called [ttypescript](https://github.com/cevek/ttypescript), 
+The easiest solution is to use a community-driven library called [ttypescript](https://github.com/cevek/ttypescript), 
 which offers a way to overcome this limitation and utilize custom transformers with TypeScript projects.
 
-1. Install `ttypescript` as a dev-dependency
+1. Install `ttypescript` as a dev-dependency with npm:
 
 ```
 npm install ttypescript --save-dev
 ```
 
-or
+or yarn:
 
 ```
 yarn add ttypescript -D
 
 ```
-2. In `tsconfig.json` set a path to the transformer in `compilerOptions` section `plugin` array:
+2. In `tsconfig.json` set a path to the transformer in the `compilerOptions` `plugins` array:
 
 ```json5
 // tsconfig.json
@@ -119,7 +120,8 @@ yarn add ttypescript -D
 
 ## Examples
 
-There are several type groups that are represented in different way to provide the most information, specific for the type.
+There are several type groups, each represented by an interface.
+The interfaces are designed to provide the most information from the corresponding type.
 
 ### Basic
 
@@ -147,7 +149,8 @@ const obj = [
 There are 3 base properties that every *"objectified"* property has:
 - `key` *string | number | symbol* - Name of the property
 - `required` *boolean* - Whether property is marked as required
-- `type` *objectified.TypeValue (string)* - Type of the property. Main idea behind it is to represent what `typeof` keyword would return when used on the type, but with few extra that. All of them in further examples.
+- `type` *objectified.TypeValue (string)* - Type of the property. Main idea behind it is to represent what `typeof` keyword would return when used on the type, but with few extra.
+You can check all of them in [examples](#examples) section.
 
 
 ### Optional Parameter
@@ -276,7 +279,7 @@ const obj = [
 
 Generated properties type: `objectified.LiteralObjectType`
 - `objectType` *objectified.ObjectTypeValue (string)* - provides more information about the type for object types.
-- `props` *(objectified.Type[])* - array of properties of the object
+- `props` *(objectified.Type[])* - an array of properties of the object
 
 ### Array
 
@@ -378,7 +381,7 @@ const obj = [
 ```
 
 Generated properties type: `objectified.TupleType`
-- `tupleType` *objectified.Property[]* - array representation of tuple individual types 
+- `tupleType` *objectified.Property[]* - an array representation of tuple individual types 
 
 
 ### Function
@@ -430,7 +433,7 @@ const obj = [
 ```
 
 Generated property type: `objectified.FunctionType`
-- `arguments` *objectified.Property[]* - array of function arguments representations
+- `arguments` *objectified.Property[]* - an array of function arguments representations
 - `returnType` *objectified.Type* - function return type representation
 
 
@@ -599,7 +602,7 @@ const obj = [
 
 Generated property type: `objectified.ReferenceType`
 - `referenceName` *string* - name of the referenced type
-- `props` *objectified.Type[]* - Same as in literal object the nested properties are represented.
+- `props` *objectified.Type[]* - same as in literal object, the nested properties are represented.
 
 
 #### Reference With Generic Parameter
@@ -644,7 +647,7 @@ const obj = [
 ```
 
 Generated property type: `objectified.ReferenceType`
-- `typeArguments` *objectified.Type[]* - array that represents generic parameters
+- `typeArguments` *objectified.Type[]* - an array of generic parameters representations
 -
 
 #### Circular Reference
@@ -687,7 +690,7 @@ const obj = [
 ```
 
 Generated properties type: `objectified.ReferenceType`, 
-- `isCircular` *boolean* - Indicates whether the property references a type that has already been referenced earlier in the same object
+- `isCircular` *boolean* - indicates whether the property references a type that has already been referenced earlier in the same object
 
 
 #### Type Alias
@@ -730,4 +733,4 @@ const obj = [
 
 Generated properties type: `objectified.ReferenceType`,
 
-> Note that even the type of `aliasRef` is set as `AliasType`, `referenceName` is directly `SimpleInterface`
+> Note that even though the type of `aliasRef` is set as `AliasType`, the `referenceName` is directly `SimpleInterface`
