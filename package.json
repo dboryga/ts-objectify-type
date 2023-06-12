@@ -39,6 +39,6 @@
     "index.js",
     "index.d.ts",
     "transformer.ts",
-    "tsconfig.json",
+    "tsconfig.json"
   ]
 }
