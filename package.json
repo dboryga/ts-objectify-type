@@ -2,22 +2,37 @@
   "name": "ts-objectify-type",
   "version": "0.0.1",
   "description": "TypeScript transformer for creating object representation of deeply nested types",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "author": "Damian Boryga",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dboryga/ts-objectify-type.git"
   },
-  "keywords": [
-    "typescript", "transformer", "transformation", "compiler", "runtime", "representation", "schema",
-    "type", "interface", "nested", "deep"
-  ],
-  "author": "Damian Boryga",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dboryga/ts-objectify-type/issues"
   },
-  "homepage": "https://github.com/dboryga/ts-objectify-type#readme"
+  "homepage": "https://github.com/dboryga/ts-objectify-type#readme",
+  "devDependencies": {
+    "@types/node": "^20.3.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "typescript": ">=2.4.1"
+  },
+  "main": "index.js",
+  "keywords": [
+    "typescript",
+    "transformer",
+    "ts-transformer",
+    "transformation",
+    "compiler",
+    "runtime",
+    "type",
+    "interface",
+    "object",
+    "deep",
+    "nested",
+    "representation",
+    "schema"
+  ]
 }

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib":  ["ESNext"],
+    "target": "ESNext",
+    "module": "commonjs",
+    "strict": true,
+  },
+  "include": [
+    "transformer.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
