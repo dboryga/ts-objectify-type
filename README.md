@@ -80,6 +80,51 @@ TypeScript provides limited support for using custom transformers, but it doesn'
 easy-to-use options for this purpose. However, there are alternative solutions available.
 
 
+### [ts-patch](https://github.com/nonara/ts-patch)
+
+The easiest solution is to use a community-driven library called [ts-patch](https://github.com/nonara/ts-patch),
+which offers a way to overcome this limitation and utilize custom transformers with TypeScript projects.
+The package is build based on [ttypescript](#ttypescript) (for more info check next section).
+
+1. Install `ts-patch` as a dev-dependency with npm:
+
+```cmd
+npm install ts-patch --save-dev
+```
+
+or yarn:
+
+```cmd
+yarn add ts-patch -D
+
+```
+
+2. Add prepare script (keeps patch persisted after npm install)
+
+```json5
+// package.json
+{
+ "scripts": {
+   "prepare": "ts-patch install -s"
+ }
+}
+```
+
+3. In `tsconfig.json` set a path to the transformer in the `compilerOptions` `plugins` array:
+
+```json5
+// tsconfig.json
+{
+  "compilerOptions": {
+    "plugins": [
+      { "transform": "ts-objectify-type/transformer.ts" }
+    ]
+  }
+}
+```
+
+
+
 ### [ttypescript](https://github.com/cevek/ttypescript)
 
 TTypescript (Transformer TypeScript) solves the problem by patching on the fly the compile module to use transformers from `tsconfig.json`.
