@@ -17,6 +17,7 @@ TypeScript transformer for creating object representation of deeply nested types
 - - [Optional Parameter](#optional-parameter)
 - - [Primitives](#primitives)
 - - [Literal Object](#literal-object)
+- - [Null](#null)
 - - [Array](#array)
 - - [Tuple](#tuple)
 - - [Function](#function)
@@ -27,6 +28,15 @@ TypeScript transformer for creating object representation of deeply nested types
 - - - [Reference with Generic Parameter](#reference-with-generic-parameter)
 - - - [Circular Reference](#circular-reference)
 - - - [Type Alias](#type-alias)
+- [Utility Functions](#utility-functions)
+- - [Property](#property)
+- - [Primitives](#primitives)
+- - [Function](#function)
+- - [Union / Intersection](#union--intersection)
+- - [Array / Tuple](#array--tuple)
+- - [Object](#object)
+- - [Other](#other)
+- - [Groups](#groups)
 
 
 ## Key Feature
@@ -331,9 +341,34 @@ const obj = [
 ];
 ```
 
-Generated properties type: `objectified.LiteralObjectType`
-- `objectType` *objectified.ObjectTypeValue (string)* - provides more information about the type for object types.
-- `props` *(objectified.Type[])* - an array of properties of the object
+
+### Null
+
+```ts
+import { objectifyType } from 'ts-objectify-type';
+
+interface ExampleType {
+  nullProp: null;
+}
+
+const obj = objectifyType<ExampleType>();
+```
+
+```ts
+// Generated result:
+const obj = [
+  {
+    key: "nullProp",
+    required: true,
+    type: "object",
+    objectType: "null",
+  }
+];
+```
+
+> `null` is technically primitive, but when `typeof` is used, it returns `"object"`.  
+> So in generated object `type="object"` and `objectType="null"` 
+
 
 ### Array
 
@@ -788,3 +823,60 @@ const obj = [
 Generated properties type: `objectified.ReferenceType`,
 
 > Note that even though the type of `aliasRef` is set as `AliasType`, the `referenceName` is directly `SimpleInterface`
+
+
+## Utility Functions
+
+The following utility functions are available in the `objectified` namespace to narrow down `objectified.Type`.  
+All functions take one argument of `objectified.Type` type.
+
+### Property
+
+- `isProperty(type)` - has `key` and `required` properties
+- `isRequired(type)` - `required` is `true`
+- `isOptional(type)` - `required` is `false`
+
+### Primitive Types
+
+- `isString(type)` - whether is *string*
+- `isNumber(type)` - whether is *number*
+- `isBoolean(type)` - whether is *boolean*
+- `isUndefined(type)` - whether is *undefined*
+- `isNull(type)` - whether is *null*
+
+### Function
+
+- `isFunction(type)` - whether is *function*
+
+### Union / Intersection
+
+- `isUnion(type)` - whether is *union*
+- `isIntersection(type)` - whether is *intersection*
+
+### Array / Tuple
+
+- `isArray(type)` - whether is *array*
+- `isTuple(type)` - whether is *tuple*
+- `isArrayOrTuple(type)` - whether is *array* or *tuple*
+
+### Object
+
+- `isLiteralObject(type)` - whether is *literal object*
+- `isReference(type)` - whether is *reference*
+- `isCircularReference(type)` - whether is *circular reference*
+- `hasProps(type)` - whether it has `props` property (meaning *reference* or *literal object*)
+- `isUnknownObject(type)` - unknown object represents error or unsupported type (please [report a bug](https://github.com/dboryga/ts-objectify-type/issues) when encountered)
+
+### Other
+
+- `isVoid(type)` - whether is *void*
+- `isNever(type)` - whether is *never*
+- `isGenericParameter(type)` - whether is *generic type parameter*
+
+### Groups
+
+- `isNotNullPrimitive(type)` - *string*, *number*, *boolean* or *undefined*
+- `isPrimitive(type)` - *"Not Null Primitive"*, or *null*
+- `isNotObject(type)` - *"Not Null Primitive"*, *void* or *never*
+- `isNotNullObject(type)` - *literal object*, *array*, *tuple* *reference*, *unknown object*
+- `isObject(type)` - *Not Null Object* or *null*

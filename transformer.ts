@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as path from "path";
 import * as ts from "typescript";
 import { objectified } from "./index";
 
@@ -46,15 +46,17 @@ function resolveSymbol(symbol: ts.Symbol): objectified.Property | null {
   if (!symbol?.valueDeclaration) return null;
 
   const type = typeChecker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+  const key = symbol.getName();
+  const required = !(symbol.flags & ts.SymbolFlags.Optional);
 
   return {
-    key: symbol.getName(),
-    required: !(symbol.flags & ts.SymbolFlags.Optional),
-    ...resolveType(type)
+    key,
+    required,
+    ...resolveType(type, !required)
   } as any
 }
 
-function resolveType(type: ts.Type): objectified.Type {
+function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectified.Type {
   const typeNode = typeChecker.typeToTypeNode(type, undefined, undefined);
 
   if (!typeNode || !typeNode.kind) {
@@ -75,11 +77,19 @@ function resolveType(type: ts.Type): objectified.Type {
   if (type.flags & ts.TypeFlags.Null) {
     return {
       type: 'object',
-      objectType: 'null'
+      objectType: 'null',
     } as objectified.NullObjectType;
   }
 
   if (type.isUnion()) {
+    if (isOptionalSymbol) {
+      const filteredUndefined = type.types.filter(_type => !(_type.flags & ts.TypeFlags.Undefined))
+
+      if (filteredUndefined.length === 1) {
+        return resolveType(filteredUndefined[0]);
+      }
+    }
+
     return {
       type: 'union',
       unionOf: type.types.map(_type => resolveType(_type)),
@@ -116,7 +126,7 @@ function resolveType(type: ts.Type): objectified.Type {
     return {
       type: 'object',
       objectType: 'array',
-      arrayType: getArrayType(type)
+      arrayType: getArrayType(type),
     } as objectified.ArrayType;
   }
 
@@ -137,7 +147,7 @@ function resolveType(type: ts.Type): objectified.Type {
     return {
       type: 'object',
       objectType: 'literal',
-      props: createNestedObject(type.getProperties())
+      props: createNestedObject(type.getProperties()),
     } as objectified.LiteralObjectType;
   }
 
@@ -197,11 +207,13 @@ function getFunctionArguments(typeNode: ts.SignatureDeclaration): objectified.Fu
     if (!symbol?.valueDeclaration) return null;
 
     const type = typeChecker.getTypeOfSymbolAtLocation(symbol, symbol.valueDeclaration);
+    const key = symbol.getName();
+    const required = !param.questionToken;
 
     return {
-      key: symbol.getName(),
-      required: !param.questionToken,
-      ...resolveType(type)
+      key,
+      required,
+      ...resolveType(type, !required)
     }
   }).filter((resolved): resolved is objectified.Property<string> => !!resolved)
 }
