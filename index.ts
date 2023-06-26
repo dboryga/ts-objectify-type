@@ -1,6 +1,8 @@
-export declare function objectifyType<
+export function objectifyType<
   _Type extends object
->(): objectified.TypeRepresentation<_Type>;
+>(): objectified.TypeRepresentation<_Type> | undefined {
+  return undefined;
+}
 
 export namespace objectified {
   export type TypeRepresentation<_Type extends object = any> = Property<keyof _Type>[];
