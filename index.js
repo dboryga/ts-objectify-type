@@ -5,7 +5,6 @@ function objectifyType() {
     return undefined;
 }
 exports.objectifyType = objectifyType;
-;
 var objectified;
 (function (objectified) {
     /**
