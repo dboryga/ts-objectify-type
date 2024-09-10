@@ -81,6 +81,10 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
     } as objectified.NullObjectType;
   }
 
+  if (type.flags & ts.TypeFlags.Boolean) {
+    return {type: typeChecker.typeToString(type) } as objectified.PrimitiveType;
+  }
+
   if (type.isUnion()) {
     if (isOptionalSymbol) {
       const filteredUndefined = type.types.filter(_type => !(_type.flags & ts.TypeFlags.Undefined))
