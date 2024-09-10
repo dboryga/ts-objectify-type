@@ -1,3 +1,12 @@
+## 1.2.0
+
+- Fixed: boolean is not generated as a union of 'true' and 'false'
+- Performance improvements
+
+## 1.1.2
+
+- Bug fixes
+
 ## 1.1.0
 
 - Added: Utility functions
