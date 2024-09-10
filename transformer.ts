@@ -70,7 +70,7 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
   if (isGenericParameter(type)) {
     return {
       type: 'generic',
-      typeName: 'boolean',
+      typeName: typeChecker.typeToString(type),
     } as objectified.GenericParameterType;
   }
 
@@ -82,7 +82,7 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
   }
 
   if (type.flags & ts.TypeFlags.Boolean) {
-    return {type: 'boolean' } as objectified.PrimitiveType;
+    return {type: 'boolean'};
   }
 
   if (type.isUnion()) {
@@ -93,7 +93,7 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
         return resolveType(filteredUndefined[0]);
       }
       if (filteredUndefined.every(i => i.flags & ts.TypeFlags.BooleanLiteral)) {
-        return {type: typeChecker.typeToString(type) } as objectified.PrimitiveType;
+        return {type: 'boolean'};
       }
     }
 

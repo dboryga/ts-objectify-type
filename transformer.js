@@ -8,11 +8,11 @@ return null;var type=typeChecker.getTypeOfSymbolAtLocation(symbol,symbol.valueDe
 function resolveType(type,isOptionalSymbol){var _a;if(isOptionalSymbol===void 0){isOptionalSymbol=false;}
 var typeNode=typeChecker.typeToTypeNode(type,undefined,undefined);if(!typeNode||!typeNode.kind){throw new Error('ts-objectify-type: Type could not be transformed to object representation');}
 if(isCircular(type,typeNode)){return getReferenceType(type,typeNode,true);}
-if(isGenericParameter(type)){return{type:'generic',typeName:'boolean',};}
+if(isGenericParameter(type)){return{type:'generic',typeName:typeChecker.typeToString(type),};}
 if(type.flags&ts.TypeFlags.Null){return{type:'object',objectType:'null',};}
 if(type.flags&ts.TypeFlags.Boolean){return{type:'boolean'};}
 if(type.isUnion()){if(isOptionalSymbol){var filteredUndefined=type.types.filter(function(_type){return!(_type.flags&ts.TypeFlags.Undefined);});if(filteredUndefined.length===1){return resolveType(filteredUndefined[0]);}
-if(filteredUndefined.every(function(i){return i.flags&ts.TypeFlags.BooleanLiteral;})){return{type:typeChecker.typeToString(type)};}}
+if(filteredUndefined.every(function(i){return i.flags&ts.TypeFlags.BooleanLiteral;})){return{type:'boolean'};}}
 return{type:'union',unionOf:type.types.map(function(_type){return resolveType(_type);}),};}
 if(type.isIntersection()){return{type:'intersection',intersectionOf:type.types.map(function(_type){return resolveType(_type);}),};}
 if(!(type.flags&ts.TypeFlags.Object)){return{type:typeChecker.typeToString(type)};}
