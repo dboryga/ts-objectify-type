@@ -92,6 +92,9 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
       if (filteredUndefined.length === 1) {
         return resolveType(filteredUndefined[0]);
       }
+      if (filteredUndefined.every(i => i.flags & ts.TypeFlags.BooleanLiteral)) {
+        return {type: typeChecker.typeToString(type) } as objectified.PrimitiveType;
+      }
     }
 
     return {
