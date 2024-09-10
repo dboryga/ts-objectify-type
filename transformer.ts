@@ -70,7 +70,7 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
   if (isGenericParameter(type)) {
     return {
       type: 'generic',
-      typeName: typeChecker.typeToString(type),
+      typeName: 'boolean',
     } as objectified.GenericParameterType;
   }
 
@@ -82,7 +82,7 @@ function resolveType(type: ts.Type, isOptionalSymbol: boolean = false): objectif
   }
 
   if (type.flags & ts.TypeFlags.Boolean) {
-    return {type: typeChecker.typeToString(type) } as objectified.PrimitiveType;
+    return {type: 'boolean' } as objectified.PrimitiveType;
   }
 
   if (type.isUnion()) {
